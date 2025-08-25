@@ -19,17 +19,99 @@ This repo is my way of:
 
 ## 📚 What You'll Find Here
 
-Each notebook is a standalone exploration of a specific RL algorithm. I’ve tried to keep things modular, well-commented, and visually intuitive.
+- `DQN.ipynb`
+- `PPO.ipynb`
+- `A2C.ipynb`
+- `REINFORCE.ipynb`
+- `DDPG.ipynb`
+- `GAIL.ipynb`
+- `GridWorld.ipynb`
 
-### Algorithms Implemented:
--  **DQN** – Deep Q-Network
--  **PPO** – Proximal Policy Optimization
--  **A2C** – Advantage Actor-Critic
--  **REINFORCE** – Monte Carlo Policy Gradient
--  **DDPG** – Deep Deterministic Policy Gradient
--  **GAIL** – Generative Adversarial Imitation Learning
--  **Grid World** – Tabular and visual exploration of RL basics
+---
 
+## 📘 Notebook Descriptions
+
+### `DQN.ipynb` – Deep Q-Network  
+Implements the classic DQN algorithm using experience replay and target networks.  
+- Environment: CartPole-v1  
+- Highlights:  
+  - ε-greedy exploration  
+  - Replay buffer implementation  
+  - Target network synchronization  
+- Visualization: Episode rewards, Q-value evolution  
+- Notes: Includes hyperparameter tuning and training stability tips.
+
+---
+
+### `PPO.ipynb` – Proximal Policy Optimization  
+A robust policy gradient method with clipped objective and adaptive updates.  
+- Environment: LunarLander-v2  
+- Highlights:  
+  - Actor-Critic architecture  
+  - Clipped surrogate loss  
+  - Mini-batch training with advantage estimation  
+- Visualization: Policy entropy, reward curves  
+- Notes: Compared with vanilla policy gradients for stability.
+
+---
+
+### `A2C.ipynb` – Advantage Actor-Critic  
+A synchronous version of A3C with shared networks for policy and value estimation.  
+- Environment: MountainCarContinuous-v0  
+- Highlights:  
+  - Advantage calculation  
+  - Shared neural network backbone  
+  - On-policy updates  
+- Visualization: Learning curves, value function heatmaps  
+- Notes: Includes discussion on bias-variance tradeoff.
+
+---
+
+### `REINFORCE.ipynb` – Monte Carlo Policy Gradient  
+Implements the simplest policy gradient method using full episode returns.  
+- Environment: CartPole-v1  
+- Highlights:  
+  - Baseline subtraction  
+  - Episode-based updates  
+  - High variance handling  
+- Visualization: Reward trajectory per episode  
+- Notes: Great for understanding the fundamentals of policy gradients.
+
+---
+
+### `DDPG.ipynb` – Deep Deterministic Policy Gradient  
+A continuous control algorithm combining actor-critic with target networks.  
+- Environment: Pendulum-v0  
+- Highlights:  
+  - Deterministic policy  
+  - Soft target updates  
+  - Ornstein-Uhlenbeck noise for exploration  
+- Visualization: Action trajectories, reward curves  
+- Notes: Includes comparison with discrete-action methods.
+
+---
+
+### `GAIL.ipynb` – Generative Adversarial Imitation Learning  
+Trains agents to mimic expert behavior using adversarial training.  
+- Environment: Custom GridWorld  
+- Highlights:  
+  - Discriminator vs. policy training loop  
+  - Expert trajectory loading  
+  - Reward shaping from discriminator output  
+- Visualization: Policy convergence, discriminator loss  
+- Notes: Bridges RL and imitation learning with GAN-style training.
+
+---
+
+### `GridWorld.ipynb` – Tabular RL Exploration  
+A visual and intuitive intro to RL using a simple grid-based environment.  
+- Environment: Custom GridWorld  
+- Highlights:  
+  - Q-learning and SARSA  
+  - Value iteration and policy iteration  
+  - Heatmap visualization of value functions  
+- Visualization: Grid overlays, policy arrows  
+- Notes: Ideal for beginners and algorithm debugging.
 ---
 
 ## 🛠️ Tools & Libraries
