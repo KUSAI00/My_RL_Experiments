@@ -22,19 +22,19 @@ This repo is my way of:
 Each notebook is a standalone exploration of a specific RL algorithm. I’ve tried to keep things modular, well-commented, and visually intuitive.
 
 ### Algorithms Implemented:
-- 🧠 **DQN** – Deep Q-Network
-- 🌀 **PPO** – Proximal Policy Optimization
-- 🎭 **A2C** – Advantage Actor-Critic
-- 🎯 **REINFORCE** – Monte Carlo Policy Gradient
-- 🧬 **DDPG** – Deep Deterministic Policy Gradient
-- 🕵️‍♂️ **GAIL** – Generative Adversarial Imitation Learning
-- 🧱 **Grid World** – Tabular and visual exploration of RL basics
+-  **DQN** – Deep Q-Network
+-  **PPO** – Proximal Policy Optimization
+-  **A2C** – Advantage Actor-Critic
+-  **REINFORCE** – Monte Carlo Policy Gradient
+-  **DDPG** – Deep Deterministic Policy Gradient
+-  **GAIL** – Generative Adversarial Imitation Learning
+-  **Grid World** – Tabular and visual exploration of RL basics
 
 ---
 
 ## 🛠️ Tools & Libraries
 
-- Python 3.8
+- Python 3.8^
 - TensorFlow / PyTorch (varies by notebook)
 - OpenAI Gym
 - NumPy, Matplotlib, Seaborn
