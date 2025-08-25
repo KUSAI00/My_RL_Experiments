@@ -19,13 +19,15 @@ This repo is my way of:
 
 ## 📚 What You'll Find Here
 
-- `DQN.ipynb`
-- `PPO.ipynb`
-- `A2C.ipynb`
-- `REINFORCE.ipynb`
-- `DDPG.ipynb`
-- `GAIL.ipynb`
-- `GridWorld.ipynb`
+## 📓 Notebooks Overview
+
+- [DQN.ipynb](#dqnipynb--deep-q-network)
+- [PPO.ipynb](#ppoipynb--proximal-policy-optimization)
+- [A2C.ipynb](#a2cipynb--advantage-actor-critic)
+- [REINFORCE.ipynb](#reinforceipynb--monte-carlo-policy-gradient)
+- [DDPG.ipynb](#ddpgipynb--deep-deterministic-policy-gradient)
+- [GAIL.ipynb](#gailipynb--generative-adversarial-imitation-learning)
+- [GridWorld.ipynb](#gridworldipynb--tabular-rl-exploration)
 
 ---
 
