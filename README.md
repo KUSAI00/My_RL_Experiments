@@ -1,14 +1,12 @@
-# 🧠 My_RL_Experiments
+# My_RL_Experiments
 
-This repository is a collection of Jupyter notebooks where I implement, dissect, and reflect on core RL algorithms—from the classics to the more nuanced.
+This repository is a collection of Jupyter notebooks where I implement, dissect, and reflect on core RL algorithms—from the classics to the modern ones.
 
 Whether you're a fellow student, a researcher, or just someone curious, I hope this repository offers clarity, and insight.
 
 ---
 
-## 🚀 Why This Exists
-
-As a master's student in Artificial Intelligence with a background in Civil Engineering. Reinforcement Learning sits at the intersection of control, decision-making, and curiosity—making it the perfect domain to explore both theory and practice.
+## Why This Exists
 
 This repo is my way of:
 - **Learning deeply** by building from scratch.
@@ -17,21 +15,56 @@ This repo is my way of:
 - **Show companies** that i can really work and get accepted in the job.
 ---
 
-## 📚 What You'll Find Here
+## Notebooks:
 
-## 📓 Notebooks Overview
-
+- [GridWorld.ipynb](#gridworldipynb--tabular-rl-exploration)
 - [DQN.ipynb](#dqnipynb--deep-q-network)
 - [PPO.ipynb](#ppoipynb--proximal-policy-optimization)
 - [A2C.ipynb](#a2cipynb--advantage-actor-critic)
 - [REINFORCE.ipynb](#reinforceipynb--monte-carlo-policy-gradient)
 - [DDPG.ipynb](#ddpgipynb--deep-deterministic-policy-gradient)
 - [GAIL.ipynb](#gailipynb--generative-adversarial-imitation-learning)
-- [GridWorld.ipynb](#gridworldipynb--tabular-rl-exploration)
 
 ---
 
-## 📘 Notebook Descriptions
+## Notebook Descriptions
+
+### `GridWorld.ipynb` – Tabular value iteration
+I made two algorithims Value iteration and Q-value iteration
+
+Value Iteration is an algorithm that computes the optimal value function V*(s) for each state s and, from that, the corresponding optimal policy π*.
+Algorithm Steps
+1. Initialize V(s) for all states s to arbitrary values.
+2. Iteratively Update: Repeat the following update for all states s until the values converge: Vk+1(s)←max∑s′P(s′∣s,a)R(s,a,s′)+γVk(s′)]
+3. Extract Optimal Policy: Once the values have converged to V∗(s), the optimal policy π∗(s) is deterministic and is found by taking the action that maximizes the future value from that state
+
+Q-Value Iteration directly computes the optimal action-value function Q(s,a), which represents the value of taking action a in state s. This approach bypasses the need to calculate the state value function V(s) separately.
+Algorithm Steps
+1. Initialize Q(s,a) for all state-action pairs (s,a) to arbitrary values
+2. Iteratively Update: Repeat the update rule above for all state-action pairs (s,a) until the Q-values converge.
+3. Extract Optimal Policy: Once the Q-values have converged, the optimal policy is found directly by choosing the action with the highest Q-value for each state: π∗(s)=argmaxQ(s,a)
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### `DQN.ipynb` – Deep Q-Network  
 Implements the classic DQN algorithm using experience replay and target networks.  
@@ -105,16 +138,6 @@ Trains agents to mimic expert behavior using adversarial training.
 
 ---
 
-### `GridWorld.ipynb` – Tabular RL Exploration  
-A visual and intuitive intro to RL using a simple grid-based environment.  
-- Environment: Custom GridWorld  
-- Highlights:  
-  - Q-learning and SARSA  
-  - Value iteration and policy iteration  
-  - Heatmap visualization of value functions  
-- Visualization: Grid overlays, policy arrows  
-- Notes: Ideal for beginners and algorithm debugging.
----
 
 ## 🛠️ Tools & Libraries
 
