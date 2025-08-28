@@ -48,7 +48,7 @@ Algorithm Steps
 
 The foundation of Q-Learning is the Bellman equation, which for an optimal policy can be written as:
 
-<img width="332" height="55" alt="image" src="https://github.com/user-attachments/assets/c94e3664-c39f-486c-b496-956f537c2390" />
+Q*(s, a) = E[r + γ max_{a'} Q*(s', a') | s, a]
 
 Algorithm Steps:
 1. Initilize:
