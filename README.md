@@ -44,39 +44,40 @@ Algorithm Steps
 2. Iteratively Update: Repeat the update rule above for all state-action pairs (s,a) until the Q-values converge.
 3. Extract Optimal Policy: Once the Q-values have converged, the optimal policy is found directly by choosing the action with the highest Q-value for each state: π∗(s)=argmaxQ(s,a)
 ---
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ### `DQN.ipynb` – Deep Q-Network  
-Implements the classic DQN algorithm using experience replay and target networks.  
-- Environment: CartPole-v1  
-- Highlights:  
-  - ε-greedy exploration  
-  - Replay buffer implementation  
-  - Target network synchronization  
-- Visualization: Episode rewards, Q-value evolution  
-- Notes: Includes hyperparameter tuning and training stability tips.
+
+The foundation of Q-Learning is the Bellman equation, which for an optimal policy can be written as:
+
+<img width="332" height="55" alt="image" src="https://github.com/user-attachments/assets/c94e3664-c39f-486c-b496-956f537c2390" />
+
+Algorithm Steps:
+1. Initilize:
+  - Initialize the main Q-network with random weights.
+  - Initialize the target Q-network with the same weights as the main one.
+2. loop over episodes:
+  - Reset the environment to an initial state s.
+  - For each step in the episode:
+    - Select an action a using Epsilon-Greedy Policy
+    - Execute action a in the environment, observe reward r, and the next state s′.
+    - Store the experience (s,a,r,s′) in the replay buffer.
+    - Update the current state.
+    - Sample a random mini-batch of experiences from the replay buffer.
+    - For each experience in the mini-batch
+      - Calculate the target Q-value
+      - Calculate the predicted Q-value for the taken action
+      - Compute the loss
+      - Perform gradient descent
+  - epsilon decay
+  - update target Q-network
 
 ---
+
+
+
+
+
+
+
 
 ### `PPO.ipynb` – Proximal Policy Optimization  
 A robust policy gradient method with clipped objective and adaptive updates.  
