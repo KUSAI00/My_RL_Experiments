@@ -17,11 +17,11 @@ This repo is my way of:
 
 ## Notebooks:
 
-- [GridWorld.ipynb](#gridworldipynb--tabular-rl-exploration)
+- [GridWorld.ipynb](#gridworldipynb--tabular-value-iteration)
 - [DQN.ipynb](#dqnipynb--deep-q-network)
+- [REINFORCE.ipynb](#reinforceipynb--monte-carlo-policy-gradient)
 - [PPO.ipynb](#ppoipynb--proximal-policy-optimization)
 - [A2C.ipynb](#a2cipynb--advantage-actor-critic)
-- [REINFORCE.ipynb](#reinforceipynb--monte-carlo-policy-gradient)
 - [DDPG.ipynb](#ddpgipynb--deep-deterministic-policy-gradient)
 - [GAIL.ipynb](#gailipynb--generative-adversarial-imitation-learning)
 
@@ -71,6 +71,62 @@ Algorithm Steps:
   - update target Q-network
 
 ---
+### `REINFORCE.ipynb` – Monte Carlo Policy Gradient  
+REINFORCE is a classic policy gradient method that learns a parameterized policy directly without using a value function. It uses the Monte Carlo method to estimate the policy gradient and updates the policy parameters to maximize expected rewards.
+The idea is to directly optimize the policy parameters θ to maximize the expected return:
+
+J(θ) = E[R_t | π_θ]
+
+Where:
+
+- J(θ) is the objective function (expected return)
+- π_θ is the policy parameterized by θ
+- R_t is the return (cumulative discounted reward)
+
+The policy gradient theorem shows that:
+
+∇_θ J(θ) = E[∇_θ log π_θ(a_t|s_t) * G_t]
+
+Where:
+
+- ∇_θ log π_θ(a_t|s_t) is the gradient of the log probability of action a_t given state s_t
+- G_t is the return from time step t
+
+The REINFORCE algorithm uses Monte Carlo estimation to approximate this gradient:
+
+θ ← θ + α * ∇_θ log π_θ(a_t|s_t) * G_t
+
+Where:
+
+- α is the learning rate
+- G_t is the actual return experienced from time t
+
+The return G_t is calculated as the sum of discounted future rewards:
+
+G_t = R_{t+1} + γR_{t+2} + γ²R_{t+3} + ... = Σ_{k=0}^{T-t-1} γ^k R_{t+k+1}
+
+Where:
+
+- γ (gamma) is the discount factor (0 ≤ γ ≤ 1)
+- T is the terminal time step
+
+To reduce variance, we often normalize the returns
+
+Algorithm Steps
+
+1. Initialize policy network π_θ with random parameters θ
+2. For each episode:
+
+  - Generate an episode following π_θ: s_0, a_0, r_1, s_1, a_1, r_2, ..., s_{T-1}, a_{T-1}, r_T
+  - For each time step t in the episode:
+    - Calculate return G_t = Σ_{k=t+1}^T γ^{k-t-1} r_k
+    - Calculate policy gradient: ∇θ J(θ) ≈ (1/T) Σ{t=0}^{T-1} ∇_θ log π_θ(a_t|s_t) G_t
+    - Update parameters: θ ← θ + α ∇_θ J(θ)
+
+---
+
+
+
 
 
 
@@ -103,17 +159,6 @@ A synchronous version of A3C with shared networks for policy and value estimatio
 
 ---
 
-### `REINFORCE.ipynb` – Monte Carlo Policy Gradient  
-Implements the simplest policy gradient method using full episode returns.  
-- Environment: CartPole-v1  
-- Highlights:  
-  - Baseline subtraction  
-  - Episode-based updates  
-  - High variance handling  
-- Visualization: Reward trajectory per episode  
-- Notes: Great for understanding the fundamentals of policy gradients.
-
----
 
 ### `DDPG.ipynb` – Deep Deterministic Policy Gradient  
 A continuous control algorithm combining actor-critic with target networks.  
