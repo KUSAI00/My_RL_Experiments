@@ -184,24 +184,63 @@ Algorithm Steps
 
 ---
 
-
-
-
-
-
-
-
-
-
 ### `PPO.ipynb` – Proximal Policy Optimization  
-A robust policy gradient method with clipped objective and adaptive updates.  
-- Environment: LunarLander-v2  
-- Highlights:  
-  - Actor-Critic architecture  
-  - Clipped surrogate loss  
-  - Mini-batch training with advantage estimation  
-- Visualization: Policy entropy, reward curves  
-- Notes: Compared with vanilla policy gradients for stability.
+PPO is a state-of-the-art policy gradient method that addresses the sample efficiency and training stability issues of earlier methods like REINFORCE and vanilla policy gradients. It introduces a clipped surrogate objective that prevents destructively large policy updates while maintaining the benefits of policy gradient methods.
+Traditional policy gradient methods can suffer from:
+
+- Large policy updates that destabilize training
+- Sample inefficiency requiring new data after each update
+- Difficulty in choosing appropriate step sizes
+
+PPO solves these issues by constraining policy updates to stay within a "trust region."
+The key innovation of PPO is the clipped surrogate objective function:
+
+L^CLIP(θ) = E[min(r_t(θ)A_t, clip(r_t(θ), 1-ε, 1+ε)A_t)]
+
+Where:
+- r_t(θ) = π_θ(a_t|s_t) / π_θ_old(a_t|s_t) is the probability ratio
+- A_t is the advantage at time step t
+- ε (epsilon) is the clipping parameter (typically 0.1 to 0.3)
+- clip(x, a, b) clamps x to the range [a, b]
+
+Advantage Function calculated using Monte Carlo returns for episodic tasks:
+
+A_t = G_t - V(s_t)
+
+G_t = Σ_{k=0}^{T-t-1} γ^k r_{t+k+1}
+
+The clipping ensures that:
+
+- If A_t > 0 (good action): ratio is clipped to [1, 1+ε]
+- If A_t < 0 (bad action): ratio is clipped to [1-ε, 1]
+
+This prevents the policy from changing too drastically in a single update.
+
+The critic is trained using mean squared error:
+
+L^VF(φ) = E[(V_φ(s_t) - G_t)²]
+
+The total loss function is:
+
+L(θ,φ) = E[L^CLIP(θ) + c₁L^VF(φ) - c₂H(π_θ)]
+
+Where:
+- c₁ is the value function coefficient (typically 0.5)
+- c₂ is the entropy coefficient (optional, for exploration)
+- H(π_θ) is the entropy of the policy
+
+Algorithm Steps
+1. Initialize actor π_θ and critic V_φ networks
+2. For each iteration:
+  - Collect experience using current policy π_θ_old
+  - For K epochs:
+    - For each mini-batch:
+      - Calculate advantages A_t = G_t - V_φ(s_t)
+      - Calculate probability ratio r_t(θ)
+      - Compute clipped surrogate loss L^CLIP(θ)
+      - Compute value function loss L^VF(φ)
+      - Update networks using gradients
+  - Set θ_old ← θ (update old policy for next iteration)
 
 ---
 
