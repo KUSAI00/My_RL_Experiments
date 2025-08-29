@@ -20,8 +20,8 @@ This repo is my way of:
 - [GridWorld.ipynb](#gridworldipynb--tabular-value-iteration)
 - [DQN.ipynb](#dqnipynb--deep-q-network)
 - [REINFORCE.ipynb](#reinforceipynb--monte-carlo-policy-gradient)
-- [PPO.ipynb](#ppoipynb--proximal-policy-optimization)
 - [A2C.ipynb](#a2cipynb--advantage-actor-critic)
+- [PPO.ipynb](#ppoipynb--proximal-policy-optimization)
 - [DDPG.ipynb](#ddpgipynb--deep-deterministic-policy-gradient)
 - [GAIL.ipynb](#gailipynb--generative-adversarial-imitation-learning)
 
@@ -125,6 +125,64 @@ Algorithm Steps
 
 ---
 
+### `A2C.ipynb` – Advantage Actor-Critic  
+A2C is a policy gradient method that combines the benefits of both actor-critic methods and advantage estimation. Unlike REINFORCE, which only learns a policy, A2C learns both a policy (actor) and a value function (critic) simultaneously, leading to more stable and efficient learning.
+The policy gradient for maximizing expected return J(θ) is:
+
+∇_θ J(θ) = E[∇_θ log π_θ(a_t|s_t) * A^π(s_t, a_t)]
+
+Where A^π(s_t, a_t) is the advantage function.
+The advantage function measures how much better an action is compared to the average:
+
+A^π(s_t, a_t) = Q^π(s_t, a_t) - V^π(s_t)
+
+In A2C, we approximate this using the Temporal Difference (TD) error:
+
+A(s_t, a_t) ≈ r_t + γV(s_{t+1}) - V(s_t)
+
+For episodic tasks (like LunarLander), we use Monte Carlo returns:
+
+A(s_t, a_t) = G_t - V(s_t)
+
+Where G_t is the discounted return from time step t.
+
+Actor Loss (Policy Loss)
+
+The actor loss aims to maximize expected returns:
+
+L_actor = -E[log π_θ(a_t|s_t) * A(s_t, a_t)]
+
+We use the negative because optimizers minimize loss, but we want to maximize returns.
+Critic Loss (Value Loss)
+The critic loss is the mean squared error between predicted and actual returns:
+
+L_critic = E[(G_t - V_φ(s_t))²]
+
+Combined Loss
+
+The total loss combines both components:
+
+L_total = L_actor + λ * L_critic
+
+Where λ is a weighting factor (typically 0.5).
+
+Algorithm Steps
+
+1. Initialize actor-critic network with parameters θ (actor) and φ (critic)
+2. For each episode:
+  - Reset environment and get initial state s_0
+  -For each time step t:
+    - Get action probabilities π_θ(·|s_t) and value V_φ(s_t) from network
+    - Sample action a_t from π_θ(·|s_t)
+    - Execute action, receive reward r_t and next state s_{t+1}
+    - Store (s_t, a_t, r_t, done_t)
+  - At episode end:
+    - Calculate returns G_t for all time steps
+    - Calculate advantages A_t = G_t - V_φ(s_t)
+    - Update actor: θ ← θ + α_actor * ∇_θ Σ_t log π_θ(a_t|s_t) * A_t
+    - Update critic: φ ← φ - α_critic * ∇_φ Σ_t (G_t - V_φ(s_t))²
+
+---
 
 
 
@@ -144,18 +202,6 @@ A robust policy gradient method with clipped objective and adaptive updates.
   - Mini-batch training with advantage estimation  
 - Visualization: Policy entropy, reward curves  
 - Notes: Compared with vanilla policy gradients for stability.
-
----
-
-### `A2C.ipynb` – Advantage Actor-Critic  
-A synchronous version of A3C with shared networks for policy and value estimation.  
-- Environment: MountainCarContinuous-v0  
-- Highlights:  
-  - Advantage calculation  
-  - Shared neural network backbone  
-  - On-policy updates  
-- Visualization: Learning curves, value function heatmaps  
-- Notes: Includes discussion on bias-variance tradeoff.
 
 ---
 
