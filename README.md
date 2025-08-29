@@ -241,22 +241,67 @@ Algorithm Steps
 
 ---
 
-
 ### `DDPG.ipynb` – Deep Deterministic Policy Gradient  
-A continuous control algorithm combining actor-critic with target networks.  
-- Environment: Pendulum-v0  
-- Highlights:  
-  - Deterministic policy  
-  - Soft target updates  
-  - Ornstein-Uhlenbeck noise for exploration  
-- Visualization: Action trajectories, reward curves  
-- Notes: Includes comparison with discrete-action methods.
+DDPG is an actor-critic algorithm that extends Deep Q-Networks (DQN) to continuous action spaces. It combines the actor-critic approach with insights from DQN, using experience replay and target networks to achieve stable learning in environments with continuous actions.
+DDPG consists of four neural networks:
 
+1. Actor Network μ(s|θ^μ): Maps states to actions deterministically
+2. Critic Network Q(s,a|θ^Q): Estimates Q-values for state-action pairs
+3. Target Actor Network μ'(s|θ^μ'): Stabilized copy of the actor
+4. Target Critic Network Q'(s,a|θ^Q'): Stabilized copy of the critic
+
+Traditional Q-learning methods like DQN work well for discrete action spaces but struggle with continuous actions because:
+  - Infinite action space: Cannot enumerate all possible Q-values
+  - Action selection: Finding the maximum Q-value requires optimization at each step
+  - Function approximation: Need to approximate Q(s,a) over continuous a
+DDPG solves this by learning a deterministic policy directly.
+
+Mathematical Foundation:
+For a deterministic policy μ_θ(s), the policy gradient is:
+
+∇_θ J(θ) = E[∇_θ μ_θ(s) ∇_a Q^μ(s,a)|_{a=μ_θ(s)}]
+
+This can be approximated using the chain rule:
+
+∇_θ J(θ) ≈ (1/N) Σ[∇_θ μ_θ(s_i) ∇_a Q(s_i,a)|_{a=μ_θ(s_i)}]
+
+Critic Update (Bellman Equation)
+The critic is trained to minimize the temporal difference error:
+
+L(θ^Q) = E[(Q(s_t,a_t|θ^Q) - y_t)²]
+
+Where the target y_t is:
+
+y_t = r_t + γ Q'(s_{t+1}, μ'(s_{t+1}|θ^μ')|θ^Q')
+
+Actor Update (Policy Gradient)
+The actor maximizes the expected Q-value:
+
+∇_θ^μ J ≈ (1/N) Σ[∇_a Q(s,a|θ^Q)|_{s=s_i,a=μ(s_i)} ∇_θ^μ μ(s|θ^μ)|_{s=s_i}]
+
+Target Network Updates (Soft Updates)
+Target networks are updated slowly to maintain training stability:
+
+θ' ← τθ + (1-τ)θ'
+
+Where τ << 1 is the soft update parameter.
+
+Algorithm Steps:
+1. Initialize actor μ(s|θ^μ), critic Q(s,a|θ^Q), and their target networks
+2. Initialize replay buffer R and exploration noise process
+3. For each episode:
+  - For each timestep:
+    - Select action: a_t = μ(s_t|θ^μ) + N_t (with exploration noise)
+    - Execute action and observe reward r_t and new state s_{t+1}
+    - Store transition (s_t, a_t, r_t, s_{t+1}) in replay buffer
+    - Sample random batch from replay buffer
+    - Update critic by minimizing loss: L = (1/N)Σ(y_i - Q(s_i,a_i|θ^Q))²
+    - Update actor using policy gradient: ∇_θ^μ J = (1/N)Σ∇a Q(s,a|θ^Q)|{a=μ(s)} ∇_θ μ(s|θ^μ)
+    - Soft update target networks: θ' ← τθ + (1-τ)θ'
 ---
 
 
-
-## 🛠️ Tools & Libraries
+## Tools & Libraries
 
 - Python 3.8^
 - TensorFlow / PyTorch (varies by notebook)
