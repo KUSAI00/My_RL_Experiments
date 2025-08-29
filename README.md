@@ -23,11 +23,8 @@ This repo is my way of:
 - [A2C.ipynb](#a2cipynb--advantage-actor-critic)
 - [PPO.ipynb](#ppoipynb--proximal-policy-optimization)
 - [DDPG.ipynb](#ddpgipynb--deep-deterministic-policy-gradient)
-- [GAIL.ipynb](#gailipynb--generative-adversarial-imitation-learning)
 
 ---
-
-## Notebook Descriptions
 
 ### `GridWorld.ipynb` – Tabular value iteration
 I made two algorithims Value iteration and Q-value iteration
@@ -257,17 +254,6 @@ A continuous control algorithm combining actor-critic with target networks.
 
 ---
 
-### `GAIL.ipynb` – Generative Adversarial Imitation Learning  
-Trains agents to mimic expert behavior using adversarial training.  
-- Environment: Custom GridWorld  
-- Highlights:  
-  - Discriminator vs. policy training loop  
-  - Expert trajectory loading  
-  - Reward shaping from discriminator output  
-- Visualization: Policy convergence, discriminator loss  
-- Notes: Bridges RL and imitation learning with GAN-style training.
-
----
 
 
 ## 🛠️ Tools & Libraries
